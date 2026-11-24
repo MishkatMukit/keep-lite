@@ -1,33 +1,15 @@
 import httpStatus from "http-status";
-import { Prisma } from "../../../generated/prisma/client";
 import { prisma } from "../../lib/prisma";
 import { AppError } from "../../utils/appError";
 import type { ICreateCategory, IUpdateCategory } from "./category.interface";
 
 const createCategory = async (userId: number, payload: ICreateCategory) => {
-  const name = payload.name.trim();
-
-  try {
-    const category = await prisma.category.create({
-      data: {
-        name,
-        userId,
-      },
-    });
-
-    return category;
-  } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
-      throw new AppError(
-        "Category with this name already exists",
-        httpStatus.CONFLICT,
-      );
-    }
-    throw error;
-  }
+  return prisma.category.create({
+    data: {
+      name: payload.name.trim(),
+      userId,
+    },
+  });
 };
 
 const getAllCategories = async (userId: number) => {
@@ -72,27 +54,12 @@ const updateCategory = async (
     throw new AppError("Category not found", httpStatus.NOT_FOUND);
   }
 
-  const name = payload.name.trim();
-
-  try {
-    const updated = await prisma.category.update({
-      where: { id },
-      data: { name },
-    });
-
-    return updated;
-  } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
-      throw new AppError(
-        "Category with this name already exists",
-        httpStatus.CONFLICT,
-      );
-    }
-    throw error;
-  }
+  return prisma.category.update({
+    where: { id },
+    data: {
+      name: payload.name.trim(),
+    },
+  });
 };
 
 const deleteCategory = async (id: number, userId: number) => {

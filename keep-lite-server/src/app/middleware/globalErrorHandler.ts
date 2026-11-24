@@ -29,15 +29,20 @@ export const globalErrorHandler = async (
 		errorMessage = "You have provided incorrect field type or missing fields";
 	} else if (err instanceof Prisma.PrismaClientKnownRequestError) {
 		if (err.code === "P2002") {
-			statusCode = httpStatus.BAD_REQUEST;
-			errorMessage = "Duplicate Key Error";
+			statusCode = httpStatus.CONFLICT;
+			const target = Array.isArray(err.meta?.target)
+				? err.meta.target.join(", ")
+				: typeof err.meta?.target === "string"
+					? err.meta.target
+					: "field";
+			errorMessage = `Duplicate value error: a record with this ${target} already exists.`;
 		} else if (err.code === "P2003") {
 			statusCode = httpStatus.BAD_REQUEST;
 			errorMessage = "Foreign key constraint failed";
 		} else if (err.code === "P2025") {
-			statusCode = httpStatus.BAD_REQUEST;
+			statusCode = httpStatus.NOT_FOUND;
 			errorMessage =
-				"An operation failed because it depends on one or more records that were required but not found.";
+				"The requested record was not found or could not be operated on.";
 		}
 	} else if (err instanceof Prisma.PrismaClientInitializationError) {
 		if (err.errorCode === "P1000") {

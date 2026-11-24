@@ -39,7 +39,7 @@ There is no test suite. Verify behavior by running the dev server and calling en
 - `src/app/config/index.ts` loads `.env` from `process.cwd()` and uses non-null assertions, so missing variables fail where used, not at startup. Treat every variable in `.env.example` as required.
 - Auth endpoints are mounted at `/api/v1/auth` (`register`, `login`, `refresh-token`, `logout`, `me`). `createAuthTokens` in `src/app/utils/authToken.ts` issues the pair; access/refresh tokens are set as httpOnly cookies (1 day / 7 days) and also returned in the response body.
 - `auth()` in `src/app/middleware/checkAuth.ts` tries the `Authorization` header first, then the `accessToken` cookie, verifies the `{ userId, name, email, role }` payload, looks the user up in the database, rejects non-active users with 401, and sets `req.user` to `{ userId, name, email, role }`. A role mismatch returns 403.
-- `globalErrorHandler` maps Prisma `P2002`/`P2003`/`P2025` to **400** (not 409/404), and hides 5xx messages unless `NODE_ENV=development`.
+- `globalErrorHandler` maps Prisma `P2002` to **409** (Conflict), `P2025` to **404** (Not Found), and `P2003` to **400** (Foreign key), and hides 5xx messages unless `NODE_ENV=development`.
 
 ## Deploy
 
