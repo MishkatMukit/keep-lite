@@ -1,4 +1,5 @@
 import { Link, NavLink } from "react-router";
+import { FiEdit3, FiFileText, FiFolder, FiLogIn, FiUserPlus } from "react-icons/fi";
 
 const Header = () => {
   return (
@@ -7,7 +8,7 @@ const Header = () => {
         {/* Brand */}
         <Link to="/" className="flex items-center gap-2.5 group">
           <div className="w-10 h-10 rounded-xl bg-amber-500 text-white flex items-center justify-center text-xl shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
-            📝
+            <FiEdit3 className="w-5 h-5" />
           </div>
           <div>
             <span className="text-xl font-bold text-slate-900 tracking-tight">
@@ -21,26 +22,28 @@ const Header = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              `flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
                   ? "bg-amber-50 text-amber-700 font-semibold"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`
             }
           >
-            Notes
+            <FiFileText className="w-4 h-4" />
+            <span>Notes</span>
           </NavLink>
           <NavLink
             to="/categories"
             className={({ isActive }) =>
-              `px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              `flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
                   ? "bg-amber-50 text-amber-700 font-semibold"
                   : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               }`
             }
           >
-            Categories
+            <FiFolder className="w-4 h-4" />
+            <span>Categories</span>
           </NavLink>
         </nav>
 
@@ -48,15 +51,17 @@ const Header = () => {
         <div className="flex items-center gap-2">
           <Link
             to="/login"
-            className="px-3.5 py-1.5 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-medium text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors"
           >
-            Login
+            <FiLogIn className="w-4 h-4 text-slate-500" />
+            <span>Login</span>
           </Link>
           <Link
             to="/register"
-            className="px-3.5 py-1.5 text-sm font-medium text-white bg-amber-500 hover:bg-amber-600 rounded-lg shadow-sm shadow-amber-500/20 transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 text-sm font-medium text-white bg-amber-500 hover:bg-amber-600 rounded-lg shadow-sm shadow-amber-500/20 transition-all"
           >
-            Register
+            <FiUserPlus className="w-4 h-4" />
+            <span>Register</span>
           </Link>
         </div>
       </div>
