@@ -11,7 +11,7 @@ The documentation is a **feature spec**, not a code template: its snippets are J
 - [x] Phase 0 — baseline unblocked
 - [x] Phase 1 — schema + migration
 - [x] Phase 2 — auth + middleware
-- [ ] Phase 3 — categories
+- [x] Phase 3 — categories
 - [ ] Phase 4 — notes
 - [ ] Phase 5 — API consistency
 - [ ] Phase 6 — verification

@@ -5,6 +5,7 @@ import config from "./app/config";
 import { globalErrorHandler } from "./app/middleware/globalErrorHandler";
 import { routeHandler } from "./app/middleware/routerHandler";
 import { AuthRoutes } from "./app/modules/auth/auth.route";
+import { CategoryRoutes } from "./app/modules/category/category.route";
 import { noteRoutes } from "./app/modules/note/note.routes";
 
 const app: Application = express();
@@ -27,6 +28,7 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.use("/api/v1/auth", AuthRoutes);
+app.use("/api/v1/categories", CategoryRoutes);
 // app.use("/note", noteRoutes);
 
 app.use(routeHandler);
