@@ -9,7 +9,8 @@
     "typecheck": "tsc --noEmit",
     "postinstall": "prisma generate",
     "build": "prisma generate && tsup",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "test": "tsx scripts/verify.ts"
   },
   "keywords": [],
   "license": "ISC",
