@@ -1,0 +1,11 @@
+model User {
+  id         Int          @id @default(autoincrement())
+  name       String
+  email      String       @unique
+  password   String
+  role       Role         @default(CUSTOMER)
+  status     ActiveStatus @default(ACTIVE)
+  createdAt  DateTime     @default(now())
+  notes      Note[]
+  categories Category[]
+}

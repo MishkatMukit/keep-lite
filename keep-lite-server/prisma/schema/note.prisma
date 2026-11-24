@@ -1,0 +1,15 @@
+model Note {
+  id         Int       @id @default(autoincrement())
+  title      String
+  content    String
+  color      String    @default("#ffffff")
+  isPinned   Boolean   @default(false)
+  userId     Int
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  categoryId Int?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId])
+}
