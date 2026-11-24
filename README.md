@@ -8,7 +8,11 @@ A multi-user note-taking platform backend inspired by Google Keep, designed with
 
 ```text
 keep-lite/
-├── keep-lite-server/             # Backend API service
+├── keep-lite-client/             # Frontend React app (React 19 + TypeScript + Tailwind CSS)
+│   ├── src/                      # App components, styles, and assets
+│   ├── vite.config.ts            # Vite config with @tailwindcss/vite plugin
+│   └── package.json
+├── keep-lite-server/             # Backend API service (Express 5 + TypeScript + Prisma 7)
 │   ├── prisma/schema/            # Multi-file Prisma schemas (User, Note, Category, Enums)
 │   ├── prisma/migrations/        # PostgreSQL database migrations
 │   ├── scripts/verify.ts         # Automated integration & verification test suite
@@ -22,32 +26,30 @@ keep-lite/
 │   │   ├── app.ts                # Express application configuration
 │   │   └── server.ts             # Server entry listener
 │   └── package.json
+├── api.md                        # Complete REST API specification
 └── README.md
 ```
 
 ---
 
-## Key Highlights
-
-- **JWT Authentication & Security**: Complete auth lifecycle (`register`, `login`, `refresh-token`, `me`, `logout`) with bcrypt hashing and httpOnly cookie support.
-- **Strict User Isolation**: All notes and categories belong to an authenticated user (`userId`). Cross-user access returns `404 Not Found`.
-- **Relational Categorization**: Categories are scoped per user with composite unique constraints (`@@unique([name, userId])`). Deleting a category safely sets note category references to `null` (`SetNull`).
-- **Notes CRUD, Search & Pinning**: Full CRUD with search (`?search=`), category filtering (`?categoryId=`), and automated pinned-first sorting.
-- **Automated Verification**: End-to-end integration suite covering 35 test assertions across auth, isolation, and relational cascade behaviors (`npm test`).
-
----
-
 ## Quick Start
 
+### 1. Backend Setup (`keep-lite-server`)
 ```bash
-# Navigate to backend server
 cd keep-lite-server
-
-# Install dependencies (also generates Prisma client)
 npm install
-
-# Setup environment variables
 cp .env.example .env
+npx prisma migrate dev
+npm test
+npm run dev
+```
+
+### 2. Frontend Setup (`keep-lite-client`)
+```bash
+cd keep-lite-client
+npm install
+npm run dev
+```
 
 # Run database migrations
 npx prisma migrate dev
